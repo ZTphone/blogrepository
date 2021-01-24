@@ -1,0 +1,6 @@
+user 
+
+插入：
+INSERT INTO USER (username,pwd,sex,signature,image) 
+VALUES('userone','123456','男','风一样自由','headimage')
+('Tom','123','男','Tom is a handson boy','myimage');
