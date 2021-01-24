@@ -32,9 +32,58 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--引入 Spring Boot 内嵌的 Tomcat 对 JSP 的解析包，不加解析不了 jsp 页面-->
+        <!--如果只是使用 JSP 页面，可以只添加该依赖-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+        <!--如果要使用 servlet 必须添加该以下两个依赖-->
+        <!-- servlet 依赖的 jar 包-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <!--如果使用 JSTL 必须添加该依赖-->
+        <!--jstl 标签依赖的 jar 包 start-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <!--MySQL 的驱动依赖-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+                <groupId>com.baomidou</groupId>
+                  <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.1.1</version>
+            </dependency>
+
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <!--源文件位置-->
+                <directory>src/main/webapp</directory>
+                <!--指定编译到 META-INF/resources，该目录不能随便写-->
+                <targetPath>META-INF/resources</targetPath>
+                <!--指定要把哪些文件编译进去，**表示 webapp 目录及子目录，*.*表示所有文件-->
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
