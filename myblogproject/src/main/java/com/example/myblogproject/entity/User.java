@@ -1,9 +1,13 @@
 package com.example.myblogproject.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 
 public class User {
+
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private String username;
     private  String pwd;
@@ -15,6 +19,7 @@ public class User {
     }
 
     public User(Integer id, String username, String pwd, String sex, String signature, String image) {
+
         this.id = id;
         this.username = username;
         this.pwd = pwd;
