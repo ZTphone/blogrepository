@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myblogproject.entity.Comment;
 import com.example.myblogproject.entity.User;
 import com.example.myblogproject.mapper.CommentMapper;
-import com.example.myblogproject.mapper.EssayMapper;
 import com.example.myblogproject.mapper.UserMapper;
 import com.example.myblogproject.service.CommentService;
 import com.example.myblogproject.vo.CommentAndUser;
