@@ -1,4 +1,4 @@
-package com.example.myblogproject.dao;
+package com.example.myblogproject.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.myblogproject.entity.Collect;

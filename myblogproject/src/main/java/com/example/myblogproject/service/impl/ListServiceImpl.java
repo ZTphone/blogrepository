@@ -1,8 +1,10 @@
 package com.example.myblogproject.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.myblogproject.dao.*;
+import com.example.myblogproject.mapper.*;
 import com.example.myblogproject.entity.*;
+import com.example.myblogproject.service.CommentService;
+import com.example.myblogproject.service.FavorsAndCollectService;
 import com.example.myblogproject.service.ListService;
 import com.example.myblogproject.vo.ListItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,11 @@ public class ListServiceImpl implements ListService {
     private EssayMapper essayMapper;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private FavorsAndCollectService favorsAndCollectService;
+    @Autowired
+    private CommentService commentService;
 
     /**
      *
@@ -125,30 +132,12 @@ public class ListServiceImpl implements ListService {
             User author = userMapper.selectById(e.getAuthor());
             listItem.setAuthor(author.getUsername());
             listItem.setHeadImage(author.getImage());
-            listItem.setCollectCount(this.getCollectCount(e.getId()));
-            listItem.setCommentCOunt(this.getcommentCount(e.getId()));
-            listItem.setFavorCount(this.getfavorCount(e.getId()));
+            listItem.setCollectCount(favorsAndCollectService.getEssayCollectCountById(e.getId()));
+            listItem.setCommentCOunt(commentService.getCommentCountByEssayId(e.getId()));
+            listItem.setFavorCount(favorsAndCollectService.getEssayFavorCountById(e.getId()));
             list.add(listItem);
         }
         return list;
     }
 
-    public Integer getCollectCount(Integer essayId){
-        QueryWrapper<Collect> q1 = new QueryWrapper<>();
-        q1.eq("essay_id",essayId);
-        Integer collectCount = collectMapper.selectCount(q1);
-        return collectCount;
-    }
-    public Integer getfavorCount(Integer essayId){
-        QueryWrapper<EssayFavor> q1 = new QueryWrapper<>();
-        q1.eq("essay_id",essayId);
-        Integer collectCount = essayFavorMapper.selectCount(q1);
-        return collectCount;
-    }
-    public Integer getcommentCount(Integer essayId){
-        QueryWrapper<Comment> q1 = new QueryWrapper<>();
-        q1.eq("essay_id",essayId);
-        Integer collectCount = commentMapper.selectCount(q1);
-        return collectCount;
-    }
 }

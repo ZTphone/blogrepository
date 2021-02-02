@@ -1,7 +1,7 @@
 package com.example.myblogproject.controller;
 
-import com.example.myblogproject.dao.*;
-import com.example.myblogproject.dao.EssayFavorMapper;
+import com.example.myblogproject.mapper.*;
+import com.example.myblogproject.mapper.EssayFavorMapper;
 import com.example.myblogproject.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,12 +32,26 @@ public class TestController {
     private EssayFavorMapper  essayFavorMapper;
 
 
-    @RequestMapping("/test")
+//    @RequestMapping("/test")
+//    @ResponseBody
+//    public String test(){
+//        String s = "hello,springboot";
+//        return s;
+//    }
+
+    @RequestMapping("/queryIdByEssay")
     @ResponseBody
-    public String test(){
-        String s = "hello,springboot";
-        return s;
+    public Integer queryIdByEssay(){
+
+        Essay essay = new Essay();
+        essay.setState(0);
+        essay.setAuthor(2);
+        essay.setTitle("双十一购物节");
+
+
+       return essayMapper.queryIdByEssay(essay);
     }
+
 
     @RequestMapping("/selectAllUsers")
     @ResponseBody
@@ -61,7 +75,7 @@ public class TestController {
     public Integer insertEssay(){
         Essay essay = new Essay();
         essay.setTitle("双十一购物节");
-        essay.setContent("在中国，每年的双十一，都是人们购物狂欢的日子");
+        //essay.setContent("在中国，每年的双十一，都是人们购物狂欢的日子");
         essay.setState(0);
         essay.setAuthor(1);
         System.out.println(new Date());
@@ -102,7 +116,5 @@ public class TestController {
         modelAndView.setViewName("edit.html");
         return modelAndView;
     }
-
-
 
 }

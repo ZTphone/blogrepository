@@ -14,7 +14,6 @@ public class Essay {
     private Integer id;
 
     private String title;
-    private String content;
     private Integer author;
     private Integer state;
 
@@ -30,10 +29,9 @@ public class Essay {
     public Essay() {
     }
 
-    public Essay(Integer id, String title, String content, Integer author, Integer state, Date createTime, Date modifyTime) {
+    public Essay(Integer id, String title, Integer author, Integer state, Date createTime, Date modifyTime) {
         this.id = id;
         this.title = title;
-        this.content = content;
         this.author = author;
         this.state = state;
         this.createTime = createTime;
@@ -56,13 +54,6 @@ public class Essay {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public Integer getAuthor() {
         return author;
@@ -101,7 +92,6 @@ public class Essay {
         return "Essay{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
                 ", author=" + author +
                 ", state=" + state +
                 ", createTime=" + createTime +
