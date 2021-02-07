@@ -3,8 +3,10 @@ package com.example.myblogproject.controller;
 import com.example.myblogproject.mapper.*;
 import com.example.myblogproject.mapper.EssayFavorMapper;
 import com.example.myblogproject.entity.*;
+import com.example.myblogproject.service.WriteArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.List;
 
+//@CrossOrigin(origins = "http://127.0.0.1:8080")
+@CrossOrigin
 @Controller
 public class TestController {
 
@@ -31,6 +35,9 @@ public class TestController {
     @Autowired
     private EssayFavorMapper  essayFavorMapper;
 
+    @Autowired
+    private WriteArticleService writeArticleService;
+
 
 //    @RequestMapping("/test")
 //    @ResponseBody
@@ -43,13 +50,11 @@ public class TestController {
     @ResponseBody
     public Integer queryIdByEssay(){
 
-        Essay essay = new Essay();
-        essay.setState(0);
-        essay.setAuthor(2);
-        essay.setTitle("双十一购物节");
-
-
-       return essayMapper.queryIdByEssay(essay);
+        Essay e = new Essay();
+        e.setState(2);
+        e.setAuthor(2);
+        e.setTitle("怀念的过去");
+        return writeArticleService.queryIdByEssay(e);
     }
 
 
@@ -115,6 +120,14 @@ public class TestController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("edit.html");
         return modelAndView;
+    }
+
+    @RequestMapping("/testpost")
+    @ResponseBody
+    public String testpost(String tn){
+      //  System.out.println("===="+tn);
+        String rs = tn+"kk";
+        return rs;
     }
 
 }

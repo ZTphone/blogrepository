@@ -1,5 +1,6 @@
 package com.example.myblogproject.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myblogproject.mapper.EssayContentMapper;
 import com.example.myblogproject.mapper.EssayMapper;
 import com.example.myblogproject.entity.Essay;
@@ -16,6 +17,17 @@ public class WriteArticleServiceImpl implements WriteArticleService {
 
     @Autowired
     private EssayMapper essayMapper;
+
+    @Override
+    public Integer queryIdByEssay(Essay essay) {
+        QueryWrapper<Essay> queryWrapper  = new QueryWrapper<>();
+        queryWrapper.eq("state",essay.getState());
+        queryWrapper.eq("author",essay.getAuthor());
+        queryWrapper.eq("title",essay.getTitle());
+        Essay tempEssay = essayMapper.selectOne(queryWrapper);
+        return tempEssay.getId();
+    }
+
     @Autowired
     private EssayContentMapper essayContentMapper;
 
@@ -40,7 +52,9 @@ public class WriteArticleServiceImpl implements WriteArticleService {
         newEssay.setModifyTime(new Date());
         newEssay.setState(state);
         essayMapper.insert(newEssay);
-        Integer newEssayId = essayMapper.queryIdByEssay(newEssay);
+
+        // 获取新增的essay的id
+        Integer newEssayId = this.queryIdByEssay(newEssay);
 
         EssayContent essayContent = new EssayContent();
         essayContent.setEssayId(newEssayId);

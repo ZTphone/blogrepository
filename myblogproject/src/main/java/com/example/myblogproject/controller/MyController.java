@@ -1,16 +1,23 @@
 package com.example.myblogproject.controller;
 
 import com.example.myblogproject.service.ListService;
+import com.example.myblogproject.service.LoginAndRegistService;
 import com.example.myblogproject.vo.ListItem;
+import com.example.myblogproject.vo.LoginForm;
 import com.example.myblogproject.vo.Result;
 import com.example.myblogproject.service.WriteArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
+//@CrossOrigin(origins = "http://127.0.0.1:8080", maxAge = 3600)
+@CrossOrigin
 @Controller
 public class MyController {
 
@@ -18,6 +25,8 @@ public class MyController {
     private WriteArticleService writeArticleService;
     @Autowired
     private ListService listService;
+    @Autowired
+    private LoginAndRegistService loginAndRegistService;
 
 
 
@@ -89,6 +98,26 @@ public class MyController {
     @ResponseBody
     public List<ListItem> listPublishedEssays(Integer userId){
         return listService.listPublished(userId);
+    }
+
+
+
+
+    @RequestMapping("/logintest")
+    @ResponseBody
+    public Result<Object> logintest(String username,String password){
+        System.out.println("..............");
+        System.out.println("username:"+username);
+        System.out.println("password:"+password);
+        Result<Object> result = new Result<>();
+        if(loginAndRegistService.checkUsernameAndPassword(username,password)){
+            result.setMessage("登录成功！");
+            result.setState(true);
+        }else {
+            result.setMessage("账号或密码错误！");
+            result.setState(false);
+        }
+        return result;
     }
 
 

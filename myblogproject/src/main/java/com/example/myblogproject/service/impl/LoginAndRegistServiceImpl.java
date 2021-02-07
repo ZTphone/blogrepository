@@ -21,6 +21,7 @@ public class LoginAndRegistServiceImpl implements LoginAndRegistService {
         queryWrapper.eq("username",username);
         queryWrapper.eq("pwd",password);
         List<User> list = userMapper.selectList(queryWrapper);
+      //  System.out.println("============"+list.size());
         return list.size()!=0;
     }
 

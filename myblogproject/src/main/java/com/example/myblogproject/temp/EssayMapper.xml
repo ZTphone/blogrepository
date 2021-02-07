@@ -1,0 +1,11 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<!DOCTYPE mapper-->
+<!--        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+<!--        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--<mapper namespace="com.example.myblogproject.mapper.EssayMapper">-->
+
+<!--    <select id="queryIdByEssay" resultType="Integer">-->
+<!--        select id from essay where title=#{essay.title} and author=#{essay.author} and state=#{essay.state}-->
+<!--    </select>-->
+
+<!--</mapper>-->
