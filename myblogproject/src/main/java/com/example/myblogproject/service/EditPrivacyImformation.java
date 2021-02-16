@@ -10,4 +10,5 @@ public interface EditPrivacyImformation {
     Boolean modifySex(Integer id,String sex);
     Boolean modifySignature(Integer id,String newSignature);
     Boolean modifyHeadImage();
+    Boolean modifyByUser(User user);
 }

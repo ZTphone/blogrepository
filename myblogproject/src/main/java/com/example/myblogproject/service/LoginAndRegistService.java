@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LoginAndRegistService {
-    Boolean checkUsernameAndPassword(String username, String password);
+    Integer checkUsernameAndPassword(String username, String password);
     Boolean register(User user);
 
 

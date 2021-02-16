@@ -1,5 +1,6 @@
 package com.example.myblogproject.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myblogproject.entity.User;
 import com.example.myblogproject.mapper.UserMapper;
 import com.example.myblogproject.service.EditPrivacyImformation;
@@ -40,6 +41,11 @@ public class EditPrivacyImformationImpl implements EditPrivacyImformation {
         user.setId(id);
         user.setSignature(newSignature);
         return userMapper.updateById(user)!=0;
+    }
+
+    @Override
+    public Boolean modifyByUser(User user) {
+        return userMapper.update(user,new QueryWrapper<User>().eq("id",user.getId()))!=0;
     }
 
     @Override

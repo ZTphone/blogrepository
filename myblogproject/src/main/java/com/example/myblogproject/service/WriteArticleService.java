@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public interface WriteArticleService {
     public Boolean saveDraft(Integer userId,String title,String content);
     public Boolean publishEssay(Integer userId,String title,String content);
+    public Boolean editDraft(Integer essayId,String title,String content,Integer state);
     public Boolean addEssay(Integer userId,String title,String content,Integer state);
     Integer queryIdByEssay(Essay essay);
 }

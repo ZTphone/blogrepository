@@ -50,7 +50,7 @@ public class ShowEssayServiceImpl implements ShowEssayService {
     }
 
     @Override
-    public ShowEssayPageContent getEssayPageContent(Integer essayId) {
+    public ShowEssayPageContent getEssayPageContent(Integer userId,Integer essayId) {
 
         Essay essay = this.showEssayById(essayId);
 
@@ -71,6 +71,8 @@ public class ShowEssayServiceImpl implements ShowEssayService {
         showEssayPageContent.setCollectCount(collectCount);
         showEssayPageContent.setFavorCount(favorCount);
         showEssayPageContent.setCommentList(commentList);
+        showEssayPageContent.setHasCollect(favorsAndCollectService.hasCollect(userId,essayId));
+        showEssayPageContent.setHasFavor(favorsAndCollectService.hasFavor(userId,essayId));
         return showEssayPageContent;
     }
 }

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 public interface ShowEssayService {
     User showAuthorById(Integer id);
     Essay showEssayById(Integer id);
-    EssayContent showEssayContentById(Integer id);
-    ShowEssayPageContent getEssayPageContent(Integer id);
+    EssayContent showEssayContentById(Integer essayid);
+    ShowEssayPageContent getEssayPageContent(Integer userId,Integer essayId);
 }

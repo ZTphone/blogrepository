@@ -14,17 +14,21 @@ public class ShowEssayPageContent {
     private Integer favorCount;
     private Integer collectCount;
     private List<CommentAndUser> commentList;
+    private Boolean hasCollect;
+    private Boolean hasFavor;
 
     public ShowEssayPageContent() {
     }
 
-    public ShowEssayPageContent(User author, Essay essay, EssayContent essayContent, Integer favorCount, Integer collectCount, List<CommentAndUser> commentList) {
+    public ShowEssayPageContent(User author, Essay essay, EssayContent essayContent, Integer favorCount, Integer collectCount, List<CommentAndUser> commentList, Boolean hasCollect, Boolean hasFavor) {
         this.author = author;
         this.essay = essay;
         this.essayContent = essayContent;
         this.favorCount = favorCount;
         this.collectCount = collectCount;
         this.commentList = commentList;
+        this.hasCollect = hasCollect;
+        this.hasFavor = hasFavor;
     }
 
     public User getAuthor() {
@@ -73,5 +77,21 @@ public class ShowEssayPageContent {
 
     public void setCommentList(List<CommentAndUser> commentList) {
         this.commentList = commentList;
+    }
+
+    public Boolean getHasCollect() {
+        return hasCollect;
+    }
+
+    public void setHasCollect(Boolean hasCollect) {
+        this.hasCollect = hasCollect;
+    }
+
+    public Boolean getHasFavor() {
+        return hasFavor;
+    }
+
+    public void setHasFavor(Boolean hasFavor) {
+        this.hasFavor = hasFavor;
     }
 }

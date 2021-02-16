@@ -39,13 +39,15 @@ public class ListServiceImpl implements ListService {
     @Override
     public List<ListItem> listLastest() {
         QueryWrapper<Essay> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("modify_time");
+        queryWrapper.eq("state",2);
+        queryWrapper.orderByDesc("modify_time");
         return this.getList(queryWrapper);
     }
 
     @Override
     public List<ListItem> listHotest() {
         QueryWrapper<Essay> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("state",2);
         List<ListItem> list = this.getList(queryWrapper);
         Collections.sort(list, new Comparator<ListItem>() {
             @Override
@@ -59,11 +61,12 @@ public class ListServiceImpl implements ListService {
     @Override
     public List<ListItem> listRecommend() {
         QueryWrapper<Essay> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("state",2);
         List<ListItem> list = this.getList(queryWrapper);
         Collections.sort(list, new Comparator<ListItem>() {
             @Override
             public int compare(ListItem o1, ListItem o2) {
-                return (o2.getFavorCount()+o2.getCollectCount()+o2.getCommentCOunt())-(o1.getFavorCount()+o1.getCollectCount()+o1.getCommentCOunt());
+                return (o2.getFavorCount()+o2.getCollectCount()+o2.getCommentCount())-(o1.getFavorCount()+o1.getCollectCount()+o1.getCommentCount());
             }
         });
         return list;
@@ -133,7 +136,7 @@ public class ListServiceImpl implements ListService {
             listItem.setAuthor(author.getUsername());
             listItem.setHeadImage(author.getImage());
             listItem.setCollectCount(favorsAndCollectService.getEssayCollectCountById(e.getId()));
-            listItem.setCommentCOunt(commentService.getCommentCountByEssayId(e.getId()));
+            listItem.setCommentCount(commentService.getCommentCountByEssayId(e.getId()));
             listItem.setFavorCount(favorsAndCollectService.getEssayFavorCountById(e.getId()));
             list.add(listItem);
         }

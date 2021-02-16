@@ -18,6 +18,7 @@ public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
 
     @Override
     public Boolean addFavor(Integer userId, Integer essayId) {
+        if(this.hasFavor(userId,essayId)) return true;
         EssayFavor essayFavor = new EssayFavor();
         essayFavor.setUserId(userId);
         essayFavor.setEssayId(essayId);
@@ -27,6 +28,7 @@ public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
 
     @Override
     public Boolean addCollect(Integer userId, Integer essayId) {
+        if(this.hasCollect(userId,essayId)) return true;
         Collect collect = new Collect();
         collect.setUserId(userId);
         collect.setEssayId(essayId);
@@ -68,6 +70,7 @@ public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
 
     @Override
     public Boolean cancelFavor(Integer userId, Integer essayId) {
+        if(!this.hasFavor(userId,essayId)) return true;
         QueryWrapper<EssayFavor> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         queryWrapper.eq("essay_id",essayId);
@@ -76,9 +79,10 @@ public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
 
     @Override
     public Boolean cancelCollect(Integer userId, Integer essayId) {
+        if(!this.hasCollect(userId,essayId)) return true;
         QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         queryWrapper.eq("essay_id",essayId);
-        return collectMapper.selectCount(queryWrapper)!=0;
+        return collectMapper.delete(queryWrapper)!=0;
     }
 }

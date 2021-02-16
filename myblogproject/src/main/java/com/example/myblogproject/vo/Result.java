@@ -38,6 +38,32 @@ public class Result<T> {
         this.message = message;
     }
 
+    public static Result<Object> getSuccessResult(){
+        Result<Object> result = new Result<>();
+        result.setState(true);
+        result.setMessage("succeed");
+        return  result;
+    }
+    public static Result<Object> getSuccessResult(String message){
+        Result<Object> result = new Result<>();
+        result.setState(true);
+        result.setMessage(message);
+        return  result;
+    }
+
+    public static Result<Object> getFailResult(){
+        Result<Object> result = new Result<>();
+        result.setState(false);
+        result.setMessage("succeed");
+        return  result;
+    }
+    public static Result<Object> getFailResult(String message){
+        Result<Object> result = new Result<>();
+        result.setState(false);
+        result.setMessage(message);
+        return  result;
+    }
+
     @Override
     public String toString() {
         return "Result{" +

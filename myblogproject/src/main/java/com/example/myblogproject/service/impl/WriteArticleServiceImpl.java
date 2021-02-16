@@ -62,4 +62,22 @@ public class WriteArticleServiceImpl implements WriteArticleService {
 
         return essayContentMapper.insert(essayContent)!=0;
     }
+
+    @Override
+    public Boolean editDraft(Integer essayId, String title, String content, Integer state) {
+        //更新标题
+        Essay essay = new Essay();
+        essay.setId(essayId);
+        essay.setTitle(title);
+        essay.setState(state);
+        essayMapper.updateById(essay);
+
+        //更新文章内容
+        EssayContent essayContent = new EssayContent();
+        essayContent.setContent(content);
+        QueryWrapper<EssayContent> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("essay_id",essayId);
+        essayContentMapper.update(essayContent,queryWrapper);
+        return true;
+    }
 }

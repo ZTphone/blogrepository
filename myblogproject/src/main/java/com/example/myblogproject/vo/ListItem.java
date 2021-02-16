@@ -9,19 +9,19 @@ public class ListItem {
     private String author;
     private Integer collectCount;
     private Integer favorCount;
-    private Integer commentCOunt;
+    private Integer commentCount;
 
     public ListItem() {
     }
 
-    public ListItem(Integer essayId, String title, String headImage, String author, Integer collectCount, Integer favorCount, Integer commentCOunt) {
+    public ListItem(Integer essayId, String title, String headImage, String author, Integer collectCount, Integer favorCount, Integer commentCount) {
         this.essayId = essayId;
         this.title = title;
         this.headImage = headImage;
         this.author = author;
         this.collectCount = collectCount;
         this.favorCount = favorCount;
-        this.commentCOunt = commentCOunt;
+        this.commentCount = commentCount;
     }
 
     public Integer getEssayId() {
@@ -72,12 +72,12 @@ public class ListItem {
         this.favorCount = favorCount;
     }
 
-    public Integer getCommentCOunt() {
-        return commentCOunt;
+    public Integer getCommentCount() {
+        return commentCount;
     }
 
-    public void setCommentCOunt(Integer commentCOunt) {
-        this.commentCOunt = commentCOunt;
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ListItem {
                 ", author='" + author + '\'' +
                 ", collectCount=" + collectCount +
                 ", favorCount=" + favorCount +
-                ", commentCOunt=" + commentCOunt +
+                ", commentCount=" + commentCount +
                 '}';
     }
 }
