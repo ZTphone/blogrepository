@@ -6,9 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Essay {
+public class Essay implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Integer id;

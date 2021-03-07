@@ -3,7 +3,9 @@ package com.example.myblogproject.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-public class Comment {
+import java.io.Serializable;
+
+public class Comment implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Integer id;

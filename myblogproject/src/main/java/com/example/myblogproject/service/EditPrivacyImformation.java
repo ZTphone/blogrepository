@@ -11,4 +11,5 @@ public interface EditPrivacyImformation {
     Boolean modifySignature(Integer id,String newSignature);
     Boolean modifyHeadImage();
     Boolean modifyByUser(User user);
+    Boolean changeHeadImage(Integer id,String imageName);
 }

@@ -52,4 +52,13 @@ public class EditPrivacyImformationImpl implements EditPrivacyImformation {
     public Boolean modifyHeadImage() {
         return null;
     }
+
+    @Override
+    public Boolean changeHeadImage(Integer id, String imageName) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id);
+        User user = new User();
+        user.setImage(imageName);
+        return userMapper.update(user,queryWrapper)!=0;
+    }
 }
