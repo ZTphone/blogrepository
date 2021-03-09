@@ -124,7 +124,7 @@ public class ListServiceImpl implements ListService {
         queryWrapper.in("id",set);
         return this.getList(queryWrapper);
     }
-
+    @Override
     public List<ListItem> getList(QueryWrapper<Essay> queryWrapper){
         List<ListItem> list  = new ArrayList<>();
         List<Essay> essayList = essayMapper.selectList(queryWrapper);
@@ -143,4 +143,18 @@ public class ListServiceImpl implements ListService {
         return list;
     }
 
+    @Override
+    public ListItem getListItembyEssayId(Integer essayId) {
+        Essay e = essayMapper.selectById(essayId);
+        ListItem listItem = new ListItem();
+        listItem.setEssayId(e.getId());
+        listItem.setTitle(e.getTitle());
+        User author = userMapper.selectById(e.getAuthor());
+        listItem.setAuthor(author.getUsername());
+        listItem.setHeadImage(author.getImage());
+        listItem.setCollectCount(favorsAndCollectService.getEssayCollectCountById(e.getId()));
+        listItem.setCommentCount(commentService.getCommentCountByEssayId(e.getId()));
+        listItem.setFavorCount(favorsAndCollectService.getEssayFavorCountById(e.getId()));
+        return listItem;
+    }
 }

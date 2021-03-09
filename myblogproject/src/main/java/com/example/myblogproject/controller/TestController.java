@@ -4,9 +4,11 @@ import com.example.myblogproject.mapper.*;
 import com.example.myblogproject.mapper.EssayFavorMapper;
 import com.example.myblogproject.entity.*;
 import com.example.myblogproject.service.EditPrivacyImformation;
+import com.example.myblogproject.service.HotEssaysService;
 import com.example.myblogproject.service.WriteArticleService;
 import com.example.myblogproject.utils.RedisUtil;
 import com.example.myblogproject.vo.Result;
+import com.example.myblogproject.vo.ShowEssayPageContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +48,9 @@ public class TestController {
 
     @Autowired
     private EditPrivacyImformation editPrivacyImformation;
+
+    @Autowired
+    private HotEssaysService hotEssaysService;
 
     private RedisUtil redisUtil;
 
@@ -189,5 +194,18 @@ public class TestController {
         essayCount.setScore(6);
         RedisUtil.set("ObjectOne",essayCount);
     }
+
+    @RequestMapping("/testGetRedis")
+    @ResponseBody
+    public void testGetRedis(){
+        System.out.println(RedisUtil.get("ObjectOne"));
+    }
+
+    @RequestMapping("/testGetEssayPage")
+    @ResponseBody
+    public ShowEssayPageContent testGetEssayPage(){
+        return hotEssaysService.getEssayPageContent(0,19);
+    }
+
 
 }

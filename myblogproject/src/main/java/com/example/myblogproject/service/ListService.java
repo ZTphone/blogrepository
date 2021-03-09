@@ -1,5 +1,7 @@
 package com.example.myblogproject.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.myblogproject.entity.Essay;
 import com.example.myblogproject.vo.ListItem;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,7 @@ public interface ListService {
     List<ListItem> listFavor(Integer userId);
     List<ListItem> listCollected(Integer userId);
     List<ListItem> listCommented(Integer userId);
+    List<ListItem> getList(QueryWrapper<Essay> queryWrapper);
+    ListItem getListItembyEssayId(Integer essayId);
 
 }

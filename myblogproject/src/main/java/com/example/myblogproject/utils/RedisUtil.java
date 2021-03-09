@@ -136,5 +136,31 @@ public class RedisUtil {
         }
     }
 
+    public static boolean flush(){
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.flushDB();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }finally{
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public static boolean isEmpty(){
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.dbSize()!=0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }finally{
+            jedisPool.returnResource(jedis);
+        }
+    }
 
 }

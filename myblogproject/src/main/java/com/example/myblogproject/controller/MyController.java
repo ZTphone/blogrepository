@@ -36,6 +36,8 @@ public class MyController {
     private FavorsAndCollectService favorsAndCollectService;
     @Autowired
     private EditPrivacyImformation editPrivacyImformation;
+    @Autowired
+    private HotEssaysService hotEssaysService;
 
 
 
@@ -94,7 +96,8 @@ public class MyController {
     @RequestMapping("/listHotestEssays")
     @ResponseBody
     public List<ListItem> listHotestEssays(){
-        return listService.listHotest();
+        System.out.println("redis+++++++++");
+        return hotEssaysService.listHotest();
     }
 
     @RequestMapping("/listDraftEssays")
@@ -164,6 +167,12 @@ public class MyController {
     @ResponseBody
     public ShowEssayPageContent showEssayPageById(Integer userId, Integer essayId){
         return showEssayService.getEssayPageContent(userId, essayId);
+    }
+
+    @RequestMapping("/showHotEssayPageById")
+    @ResponseBody
+    public ShowEssayPageContent showHotEssayPageById(Integer userId, Integer essayId){
+        return hotEssaysService.getEssayPageContent(userId, essayId);
     }
 
     @RequestMapping("/showEssayContentById")
