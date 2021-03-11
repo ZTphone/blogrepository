@@ -7,6 +7,7 @@ import com.example.myblogproject.vo.ListItem;
 import com.example.myblogproject.vo.LoginForm;
 import com.example.myblogproject.vo.Result;
 import com.example.myblogproject.vo.ShowEssayPageContent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-//@CrossOrigin(origins = "http://127.0.0.1:8080", maxAge = 3600)
+//@CrossOrigin(origins = "127.0.0.1:8080")
 @CrossOrigin
 @Controller
 public class MyController {
@@ -108,7 +113,11 @@ public class MyController {
 
     @RequestMapping("/listFavorEssays")
     @ResponseBody
-    public List<ListItem> listFavorEssays(Integer userId){
+    public List<ListItem> listFavorEssays(Integer userId,HttpServletRequest httpServletRequest){
+
+        HttpSession session = httpServletRequest.getSession();
+        System.out.println("session:"+session.getAttribute("uid"));
+
         return listService.listFavor(userId);
     }
 
@@ -135,16 +144,20 @@ public class MyController {
 
     @RequestMapping("/logintest")
     @ResponseBody
-    public Result<Object> logintest(String username,String password){
+    public Result<Object> logintest(String username, String password, HttpServletRequest httpServletRequest){
         System.out.println("..............");
         System.out.println("username:"+username);
         System.out.println("password:"+password);
+
         Result<Object> result = new Result<>();
         Integer userId = loginAndRegistService.checkUsernameAndPassword(username,password);
         if(userId!=0){
             result.setValue(userId);
             result.setMessage("登录成功！");
             result.setState(true);
+            HttpSession session = httpServletRequest.getSession();
+            session.setAttribute("uid",userId);
+            System.out.println("addSession:"+session.getAttribute("uid"));
         }else {
             result.setMessage("账号或密码错误！");
             result.setState(false);
@@ -168,6 +181,7 @@ public class MyController {
     public ShowEssayPageContent showEssayPageById(Integer userId, Integer essayId){
         return showEssayService.getEssayPageContent(userId, essayId);
     }
+
 
     @RequestMapping("/showHotEssayPageById")
     @ResponseBody

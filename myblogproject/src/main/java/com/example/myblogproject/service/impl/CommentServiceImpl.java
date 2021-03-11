@@ -6,30 +6,38 @@ import com.example.myblogproject.entity.User;
 import com.example.myblogproject.mapper.CommentMapper;
 import com.example.myblogproject.mapper.UserMapper;
 import com.example.myblogproject.service.CommentService;
+import com.example.myblogproject.service.EssayCountService;
 import com.example.myblogproject.vo.CommentAndUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private EssayCountService essayCountService;
 
 
 
     @Override
+
     public Boolean addComment(Integer userId, Integer essayId, String content) {
         Comment comment  = new Comment();
         comment.setUserId(userId);
         comment.setEssayId(essayId);
         comment.setContent(content);
-        return commentMapper.insert(comment)!=0;
+        boolean flag = commentMapper.insert(comment)!=0;
+        essayCountService.addCommentScore(essayId);
+        return flag;
     }
 
     @Override

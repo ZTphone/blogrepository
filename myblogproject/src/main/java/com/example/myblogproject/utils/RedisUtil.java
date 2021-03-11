@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 public class RedisUtil {
 
     public  static  JedisPool jedisPool;
+    public static int deadTime = 60;
 
     static {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("redis");
@@ -48,6 +49,7 @@ public class RedisUtil {
         try {
             jedis = jedisPool.getResource();
             jedis.set(key, value);
+            jedis.expire(key,deadTime);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,6 +71,7 @@ public class RedisUtil {
             String objectJson = JSON.toJSONString(value);
             jedis = jedisPool.getResource();
             jedis.set(key, objectJson);
+            jedis.expire(key,deadTime);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,12 +1,9 @@
-import com.example.myblogproject.utils.RedisUtil;
+import com.example.myblogproject.entity.Collect;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 
-import java.util.Date;
-
+@lombok.extern.slf4j.Slf4j
 public class MyTest {
-
 
 
     @Test
@@ -17,5 +14,12 @@ public class MyTest {
         jedis.set("hello","hi");
         System.out.println(jedis.get("hello")+"******");
 
+    }
+
+    @Test
+    public void test02(){
+        Collect collect = new Collect(1,2,3);
+        log.info("collect",collect);
+        log.info("hello");
     }
 }

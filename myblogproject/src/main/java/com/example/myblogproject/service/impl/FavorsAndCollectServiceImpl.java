@@ -5,34 +5,43 @@ import com.example.myblogproject.entity.Collect;
 import com.example.myblogproject.entity.EssayFavor;
 import com.example.myblogproject.mapper.CollectMapper;
 import com.example.myblogproject.mapper.EssayFavorMapper;
+import com.example.myblogproject.service.EssayCountService;
 import com.example.myblogproject.service.FavorsAndCollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
     @Autowired
     private EssayFavorMapper essayFavorMapper;
     @Autowired
     private CollectMapper collectMapper;
+    @Autowired
+    private EssayCountService essayCountService;
 
     @Override
+
     public Boolean addFavor(Integer userId, Integer essayId) {
         if(this.hasFavor(userId,essayId)) return true;
         EssayFavor essayFavor = new EssayFavor();
         essayFavor.setUserId(userId);
         essayFavor.setEssayId(essayId);
         int r =essayFavorMapper.insert(essayFavor);
+        essayCountService.addFavorScore(essayId);
         return r!=0;
     }
 
     @Override
+    @Transactional
     public Boolean addCollect(Integer userId, Integer essayId) {
         if(this.hasCollect(userId,essayId)) return true;
         Collect collect = new Collect();
         collect.setUserId(userId);
         collect.setEssayId(essayId);
         int r =collectMapper.insert(collect);
+        essayCountService.addCollectScore(essayId);
         return r!=0;
     }
 
@@ -74,6 +83,7 @@ public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
         QueryWrapper<EssayFavor> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         queryWrapper.eq("essay_id",essayId);
+        essayCountService.cancelFavorScore(essayId);
         return essayFavorMapper.delete(queryWrapper)!=0;
     }
 
@@ -83,6 +93,7 @@ public class FavorsAndCollectServiceImpl implements FavorsAndCollectService {
         QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         queryWrapper.eq("essay_id",essayId);
+        essayCountService.cancelCollectScore(essayId);
         return collectMapper.delete(queryWrapper)!=0;
     }
 }

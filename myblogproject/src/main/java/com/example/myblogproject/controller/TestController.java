@@ -9,6 +9,7 @@ import com.example.myblogproject.service.WriteArticleService;
 import com.example.myblogproject.utils.RedisUtil;
 import com.example.myblogproject.vo.Result;
 import com.example.myblogproject.vo.ShowEssayPageContent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,10 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @CrossOrigin
 @Controller
+@Slf4j
 public class TestController {
 
 //    @Value("${school.name}")
@@ -204,7 +205,20 @@ public class TestController {
     @RequestMapping("/testGetEssayPage")
     @ResponseBody
     public ShowEssayPageContent testGetEssayPage(){
+
+        Collect collect = new Collect(1,2,3);
+        System.out.println("666");
+        log.info("c",collect);
         return hotEssaysService.getEssayPageContent(0,19);
+    }
+
+    @RequestMapping("/testSLF4J")
+    @ResponseBody
+    public void testSLF4J(){
+        Collect collect = new Collect(1,2,3);
+        System.out.println("666");
+        log.info("c",collect);
+        log.debug("k",collect);
     }
 
 
