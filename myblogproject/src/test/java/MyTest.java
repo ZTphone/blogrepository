@@ -2,7 +2,6 @@ import com.example.myblogproject.entity.Collect;
 import org.junit.jupiter.api.Test;
 import redis.clients.jedis.Jedis;
 
-@lombok.extern.slf4j.Slf4j
 public class MyTest {
 
 
@@ -19,7 +18,7 @@ public class MyTest {
     @Test
     public void test02(){
         Collect collect = new Collect(1,2,3);
-        log.info("collect",collect);
-        log.info("hello");
+//        log.info("collect",collect);
+//        log.info("hello");
     }
 }

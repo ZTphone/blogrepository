@@ -3,24 +3,21 @@ package com.example.myblogproject.controller;
 import com.example.myblogproject.entity.EssayContent;
 import com.example.myblogproject.entity.User;
 import com.example.myblogproject.service.*;
+import com.example.myblogproject.vo.BloggerListItem;
 import com.example.myblogproject.vo.ListItem;
-import com.example.myblogproject.vo.LoginForm;
 import com.example.myblogproject.vo.Result;
 import com.example.myblogproject.vo.ShowEssayPageContent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 //@CrossOrigin(origins = "127.0.0.1:8080")
 @CrossOrigin
@@ -43,6 +40,8 @@ public class MyController {
     private EditPrivacyImformation editPrivacyImformation;
     @Autowired
     private HotEssaysService hotEssaysService;
+    @Autowired
+    private FollowService followService;
 
 
 
@@ -101,7 +100,6 @@ public class MyController {
     @RequestMapping("/listHotestEssays")
     @ResponseBody
     public List<ListItem> listHotestEssays(){
-        System.out.println("redis+++++++++");
         return hotEssaysService.listHotest();
     }
 
@@ -116,7 +114,6 @@ public class MyController {
     public List<ListItem> listFavorEssays(Integer userId,HttpServletRequest httpServletRequest){
 
         HttpSession session = httpServletRequest.getSession();
-        System.out.println("session:"+session.getAttribute("uid"));
 
         return listService.listFavor(userId);
     }
@@ -145,10 +142,6 @@ public class MyController {
     @RequestMapping("/logintest")
     @ResponseBody
     public Result<Object> logintest(String username, String password, HttpServletRequest httpServletRequest){
-        System.out.println("..............");
-        System.out.println("username:"+username);
-        System.out.println("password:"+password);
-
         Result<Object> result = new Result<>();
         Integer userId = loginAndRegistService.checkUsernameAndPassword(username,password);
         if(userId!=0){
@@ -157,7 +150,6 @@ public class MyController {
             result.setState(true);
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute("uid",userId);
-            System.out.println("addSession:"+session.getAttribute("uid"));
         }else {
             result.setMessage("账号或密码错误！");
             result.setState(false);
@@ -168,8 +160,6 @@ public class MyController {
     @RequestMapping("/register")
     @ResponseBody
     public Result<Object> register(User user){
-        System.out.println("++++++++++++++++++++++++++");
-        System.out.println(user);
         if(loginAndRegistService.register(user)) return Result.getSuccessResult("注册成功,请登录！");
         else return Result.getFailResult("用户名已被占用！");
     }
@@ -192,7 +182,6 @@ public class MyController {
     @RequestMapping("/showEssayContentById")
     @ResponseBody
     public EssayContent getEssayContentById(Integer essayId){
-        System.out.println("-------");
         return showEssayService.showEssayContentById(essayId);
     }
 
@@ -259,6 +248,55 @@ public class MyController {
     public Result<Object> modifyInformation(User user){
        if(editPrivacyImformation.modifyByUser(user)) return Result.getSuccessResult("修改成功");
        else return Result.getFailResult("修改失败");
+    }
+
+    @RequestMapping("/follow")
+    @ResponseBody
+    public Result<Object> follow(int userId,int bloggerId){
+        if( followService.follow(userId,bloggerId)) return Result.getSuccessResult("关注成功！");
+        else return Result.getFailResult("关注失败！");
+    }
+
+    @RequestMapping("/follow_list")
+    @ResponseBody
+    public List<BloggerListItem> followList(int userId){
+       return followService.followList(userId);
+    }
+
+    @RequestMapping(value = "/update_image",method = RequestMethod.POST)
+    public void uploadAvatar(@RequestParam(value = "file") MultipartFile file,
+                             HttpServletRequest request) throws IllegalStateException, IOException {
+        //1.确定保存的文件夹
+        //String dirPath = "/head";
+        String dirPath = request.getSession().getServletContext().getRealPath("/static/images/");
+        System.out.println("dirPath="+dirPath);
+        System.out.println(request.getParameter("userId"));
+
+//        File dir = new File(dirPath);
+//        if(!dir.exists()) {
+//            dir.mkdir();
+//        }
+        //2.确定保存的文件名
+        String idString = request.getParameter("userId");
+        String orginalFilename = file.getOriginalFilename();
+        int beginIndex = orginalFilename.lastIndexOf(".");
+        String suffix ="";
+
+        if(beginIndex!=-1) {
+            suffix = orginalFilename.substring(beginIndex);
+        }
+        String filename = idString+suffix;
+        //创建文件对象，表示要保存的头像文件,第一个参数表示存储的文件夹，第二个参数表示存储的文件
+        //File dest = new File(dir,filename);
+        //执行保存
+        System.out.println("file****************"+dirPath+filename);
+        file.transferTo(new File(dirPath+filename));
+        //更新数据表
+        //String avatar = "/upload/"+filename;
+        // 通过uid找到用户
+
+        editPrivacyImformation.changeHeadImage(Integer.parseInt(idString),filename);
+        //return Result.getSuccessResult("上传头像成功");
     }
 
 

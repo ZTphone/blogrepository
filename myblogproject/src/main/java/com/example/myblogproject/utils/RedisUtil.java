@@ -21,7 +21,6 @@ public class RedisUtil {
         int maxActive = Integer.parseInt(resourceBundle.getString("spring.redis.jedis.pool.max-active"));
         int maxIdle = Integer.parseInt(resourceBundle.getString("spring.redis.jedis.pool.max-idle"));
         int maxWait = Integer.parseInt(resourceBundle.getString("spring.redis.jedis.pool.max-wait"));
-        System.out.println(resourceBundle.getString("spring.redis.jedis.pool.max-wait")+"******");
         String ip = resourceBundle.getString("spring.redis.host");
         int port = Integer.parseInt(resourceBundle.getString("spring.redis.port"));
 

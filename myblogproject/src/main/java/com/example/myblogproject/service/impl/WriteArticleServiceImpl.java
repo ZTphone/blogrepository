@@ -1,10 +1,13 @@
 package com.example.myblogproject.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.myblogproject.entity.EssayCount;
 import com.example.myblogproject.mapper.EssayContentMapper;
+import com.example.myblogproject.mapper.EssayCountMapper;
 import com.example.myblogproject.mapper.EssayMapper;
 import com.example.myblogproject.entity.Essay;
 import com.example.myblogproject.entity.EssayContent;
+import com.example.myblogproject.service.EssayCountService;
 import com.example.myblogproject.service.WriteArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ public class WriteArticleServiceImpl implements WriteArticleService {
 
     @Autowired
     private EssayMapper essayMapper;
+    @Autowired
+    private EssayCountMapper essayCountMapper;
 
     @Override
     public Integer queryIdByEssay(Essay essay) {
@@ -56,11 +61,18 @@ public class WriteArticleServiceImpl implements WriteArticleService {
         // 获取新增的essay的id
         Integer newEssayId = this.queryIdByEssay(newEssay);
 
+        //添加文章内容
         EssayContent essayContent = new EssayContent();
         essayContent.setEssayId(newEssayId);
         essayContent.setContent(content);
+        essayContentMapper.insert(essayContent);
 
-        return essayContentMapper.insert(essayContent)!=0;
+        //添加文章得分
+        EssayCount essayCount  = new EssayCount();
+        essayCount.setEssayId(newEssayId);
+        essayCountMapper.insert(essayCount);
+
+        return true;
     }
 
     @Override

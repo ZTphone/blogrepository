@@ -56,13 +56,9 @@ public class RedisServiceImpl implements RedisSevice {
         for(EssayCount ec : essayCountList){
             essayIdList.add(ec.getEssayId());
         }
-        System.out.println("order}}}}}}}}}}}}}}}}}}}:"+essayIdList);
         QueryWrapper<Essay> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.in("id",essayIdList);
 
-        //  保存itemlist到redis
-//        List<ListItem> itemList = listService.getList(queryWrapper1);
-//        System.out.println("listOrder::::::::::::::::"+itemList);
         List<ListItem> itemList = new ArrayList<>();
         for(Integer essayId : essayIdList){
             itemList.add(listService.getListItembyEssayId(essayId));

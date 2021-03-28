@@ -10,15 +10,15 @@ public class Follow implements Serializable {
     @TableId(type = IdType.AUTO)
      private Integer id;
      private Integer userId;
-     private Integer blogger;
+     private Integer bloggerId;
 
     public Follow() {
     }
 
-    public Follow(Integer id, Integer userId, Integer blogger) {
+    public Follow(Integer id, Integer userId, Integer bloggerId) {
         this.id = id;
         this.userId = userId;
-        this.blogger = blogger;
+        this.bloggerId = bloggerId;
     }
 
     public Integer getId() {
@@ -37,20 +37,20 @@ public class Follow implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getBlogger() {
-        return blogger;
+    public Integer getBloggerId() {
+        return bloggerId;
     }
 
-    public void setBlogger(Integer blogger) {
-        this.blogger = blogger;
+    public void setBloggerId(Integer bloggerId) {
+        this.bloggerId = bloggerId;
     }
 
     @Override
     public String toString() {
-        return "follow{" +
+        return "Follow{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", blogger=" + blogger +
+                ", bloggerId=" + bloggerId +
                 '}';
     }
 }

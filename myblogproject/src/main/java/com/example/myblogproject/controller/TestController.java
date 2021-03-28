@@ -9,7 +9,6 @@ import com.example.myblogproject.service.WriteArticleService;
 import com.example.myblogproject.utils.RedisUtil;
 import com.example.myblogproject.vo.Result;
 import com.example.myblogproject.vo.ShowEssayPageContent;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,6 @@ import java.util.UUID;
 //@CrossOrigin(origins = "http://127.0.0.1:8080")
 @CrossOrigin
 @Controller
-@Slf4j
 public class TestController {
 
 //    @Value("${school.name}")
@@ -147,41 +145,7 @@ public class TestController {
         return rs;
     }
 
-    @RequestMapping(value = "/update_image",method = RequestMethod.POST)
-    public void uploadAvatar(@RequestParam(value = "file") MultipartFile file,
-                                       HttpServletRequest request) throws IllegalStateException, IOException {
-        //1.确定保存的文件夹
-        //String dirPath = "/head";
-        String dirPath = request.getSession().getServletContext().getRealPath("/static/images/");
-        System.out.println("dirPath="+dirPath);
-        System.out.println(request.getParameter("userId"));
 
-//        File dir = new File(dirPath);
-//        if(!dir.exists()) {
-//            dir.mkdir();
-//        }
-        //2.确定保存的文件名
-        String idString = request.getParameter("userId");
-        String orginalFilename = file.getOriginalFilename();
-        int beginIndex = orginalFilename.lastIndexOf(".");
-        String suffix ="";
-
-        if(beginIndex!=-1) {
-            suffix = orginalFilename.substring(beginIndex);
-        }
-        String filename = idString+suffix;
-        //创建文件对象，表示要保存的头像文件,第一个参数表示存储的文件夹，第二个参数表示存储的文件
-        //File dest = new File(dir,filename);
-        //执行保存
-        System.out.println("file****************"+dirPath+filename);
-        file.transferTo(new File(dirPath+filename));
-        //更新数据表
-        //String avatar = "/upload/"+filename;
-        // 通过uid找到用户
-
-        editPrivacyImformation.changeHeadImage(Integer.parseInt(idString),filename);
-        //return Result.getSuccessResult("上传头像成功");
-    }
 
     @RequestMapping("/testSetRedis")
     @ResponseBody
@@ -208,7 +172,7 @@ public class TestController {
 
         Collect collect = new Collect(1,2,3);
         System.out.println("666");
-        log.info("c",collect);
+//        log.info("c",collect);
         return hotEssaysService.getEssayPageContent(0,19);
     }
 
@@ -217,8 +181,8 @@ public class TestController {
     public void testSLF4J(){
         Collect collect = new Collect(1,2,3);
         System.out.println("666");
-        log.info("c",collect);
-        log.debug("k",collect);
+//        log.info("c",collect);
+//        log.debug("k",collect);
     }
 
 
