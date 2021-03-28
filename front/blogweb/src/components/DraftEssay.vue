@@ -69,17 +69,14 @@ export default {
   },
   methods:{
     clickEssay(row,event,column){
-      //  console.log('+++++++++'+row.essayId)
       this.$router.push({name:'EditDraft',params:{essayId:row.essayId}})
     },
     getImagePath(image){
-      console.log(image+"*****")
       var path = "http://localhost:9191/static/images/"+image
       return path
     }
   },
   created(){
-    //this.listLastest();
     postRequest('/listDraftEssays',{userId:window.sessionStorage.getItem('activeId')}).then(res=>{
       this.listItemData=res.data
     })

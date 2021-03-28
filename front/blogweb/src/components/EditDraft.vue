@@ -28,9 +28,7 @@ export default {
   },
   methods:{
     initValue(){
-      console.log("--------"+this.$route.params.essayId)
       if(this.$route.params.essayId){
-        console.log("++++++++++"+this.$route.params.essayId)
         postRequest('/showEssayPageById',{userId:window.sessionStorage.getItem('activeId'),essayId:this.$route.params.essayId}).then(res=>{
           this.title = res.data.essay.title;
           this.value=res.data.essayContent.content;
@@ -58,7 +56,6 @@ export default {
       this.toIndex();
     },
     publishEssay(){
-      //console.log(window.sessionStorage.getItem('activeId'))
       if(this.value===''||this.title==='') this.$message.warning('文章标题或者内容不能为空！');
       else{
         postRequest('/editDraft',{essayId:this.$route.params.essayId,title:this.title,

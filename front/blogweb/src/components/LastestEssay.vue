@@ -2,7 +2,6 @@
   <div class="div-height">
     <div class="button-div-height">
       <el-button type="success" round @click="listLastest">最新</el-button>
-      <el-button type="success" round @click="listRecommend">推荐</el-button>
       <el-button type="success" round @click="listHotest">最热</el-button>
     </div>
     <el-table
@@ -77,12 +76,6 @@ export default {
       this.listItemData=res.data
     })
     },
-    listRecommend(){
-      this.isHot=false
-      this.$http.get('/listRecommendEssays').then(res=>{
-        this.listItemData=res.data
-      })
-    },
     listHotest(){
       this.isHot=true
       this.$http.get('/listHotestEssays').then(res=>{
@@ -91,13 +84,11 @@ export default {
     },
     // 点击文章列表事件
     clickEssay(row,event,column){
-    console.log('+++++++++'+row.essayId)
       if(this.isHot) this.$router.push({name:'ShowEssay',params:{essayId:row.essayId}})
       else
       this.$router.push({name:'ShowEssay',params:{essayId:row.essayId}})
     },
     getImagePath(image){
-      console.log(image+"*****")
       var path = "http://localhost:9191/static/images/"+image
       return path
     }

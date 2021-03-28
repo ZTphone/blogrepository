@@ -79,7 +79,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm)
           postRequest("/register",this.ruleForm).then(res=>{
             if(res.data.state){
               this.$message.success(res.data.message)

@@ -9,13 +9,13 @@
       <div class="log-cloud cloud3"></div>
       <div class="log-cloud cloud4"></div>
 
-      <div class="log-logo">Myblog</div>
-      <div class="log-text">Welcome!</div>
+      <div class="log-logo">博客网站</div>
+      <div class="log-text">欢迎!</div>
     </div>
     <div class="log-email">
-      <input type="text" placeholder="Username" :class="'log-input' + (loginform.username==''?' log-input-empty':'')" v-model="loginform.username">
-      <input type="password" placeholder="Password" :class="'log-input' + (loginform.password==''?' log-input-empty':'')"  v-model="loginform.password">
-      <a href="javascript:;" class="log-btn" @click="login">Login</a>
+      <input type="text" placeholder="用户名" :class="'log-input' + (loginform.username==''?' log-input-empty':'')" v-model="loginform.username">
+      <input type="password" placeholder="密码" :class="'log-input' + (loginform.password==''?' log-input-empty':'')"  v-model="loginform.password">
+      <a href="javascript:;" class="log-btn" @click="login">登录</a>
       <el-link type="primary" @click="toRegister">去注册</el-link>
     </div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
@@ -110,33 +110,6 @@ export default {
         }
       );
 
-      // this.$http.post('/logintest',{username:this.loginform.username,password: this.loginform.password}).then(
-      //   res=>{
-      //     if(res.data.state){
-      //       console.log(res.data)
-      //       this.$message({
-      //         message: res.data.message,
-      //         type: 'success'
-      //       });
-      //       window.sessionStorage.setItem('activeId',res.data.value);
-      //       this.$router.push("/home");
-      //     }else{
-      //       this.$message.error(res.data.message);
-      //     }
-      //
-      //   }
-      // );
-      // axios.post('/logintest',{username:username,password: password}).then((response) => {
-      //   console.log("username2="+this.loginform.username);
-      //   console.log("password2="+this.loginform.password);
-      //   this.$message(response.data.message);
-      // });
-
-     //  console.log("............")
-     //  let tn = 'jil'
-     //  axios.post('testpost',tn).then(res=>{console.log(res.data)});
-     // this.$http.post('testpost',{tn:this.loginform.username}).then(res=>{console.log(res.data)});
-
       ///演示用
       // setTimeout(()=>{
       //   //登录状态15天后过期
@@ -171,7 +144,7 @@ export default {
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .log-bg{background: url(../images/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
 .log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
-.log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
+.log-text{color: #57d4c3; font-size: 23px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../images/icons.png) no-repeat; display: inline-block;}
 .close{height:16px;width:16px;background-position:-13px 0;}

@@ -1,7 +1,7 @@
 <template>
   <div class="div-height">
     <div class="button-div-height">
-      <h1>评论过的文章</h1>
+      <h1>博主的文章</h1>
     </div>
     <el-table
       :data="listItemData"
@@ -61,7 +61,7 @@
 <script>
 import {postRequest} from '../utils/api'
 export default {
-  name: "CommentedEssay",
+  name: "BloggerEssay",
   data(){
     return{
       listItemData: []
@@ -72,12 +72,14 @@ export default {
       this.$router.push({name:'ShowEssay',params:{essayId:row.essayId}})
     },
     getImagePath(image){
+      console.log(image+"*****")
       var path = "http://localhost:9191/static/images/"+image
       return path
     }
   },
   created(){
-    postRequest('http://localhost:9191/listCommentedEssays',{userId:window.sessionStorage.getItem('activeId')}).then(res=>{
+    var bid = this.$route.params.bloggerId
+    postRequest('/listPublishedEssays',{userId:bid}).then(res=>{
       this.listItemData=res.data
     })
   }

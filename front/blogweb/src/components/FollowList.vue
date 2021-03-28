@@ -1,7 +1,7 @@
 <template>
   <div class="div-height">
     <div class="button-div-height">
-      <h1>评论过的文章</h1>
+      <h1>关注的人</h1>
     </div>
     <el-table
       :data="listItemData"
@@ -17,43 +17,14 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="author"
+        prop="username"
         width="120">
       </el-table-column>
       <el-table-column
-        prop="title"
+        prop="signature"
         width="750">
       </el-table-column>
 
-      <el-table-column
-        width="30"
-      >
-        <i class="el-icon-star-off"></i>
-      </el-table-column>
-      <el-table-column
-        prop="collectCount"
-        width="30">
-      </el-table-column>
-
-      <el-table-column
-        width="30"
-      >
-        <i class="el-icon-thumb"></i>
-      </el-table-column>
-      <el-table-column
-        prop="favorCount"
-        width="30">
-
-      </el-table-column>
-      <el-table-column
-        width="30"
-      >
-        <i class="el-icon-chat-dot-round"></i>
-      </el-table-column>
-      <el-table-column
-        prop="commentCount"
-      >
-      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -61,7 +32,7 @@
 <script>
 import {postRequest} from '../utils/api'
 export default {
-  name: "CommentedEssay",
+  name: "FollowList",
   data(){
     return{
       listItemData: []
@@ -69,7 +40,7 @@ export default {
   },
   methods:{
     clickEssay(row,event,column){
-      this.$router.push({name:'ShowEssay',params:{essayId:row.essayId}})
+      this.$router.push({name:'BloggerEssay',params:{bloggerId:row.id}})
     },
     getImagePath(image){
       var path = "http://localhost:9191/static/images/"+image
@@ -77,7 +48,7 @@ export default {
     }
   },
   created(){
-    postRequest('http://localhost:9191/listCommentedEssays',{userId:window.sessionStorage.getItem('activeId')}).then(res=>{
+    postRequest('/follow_list',{userId:window.sessionStorage.getItem('activeId')}).then(res=>{
       this.listItemData=res.data
     })
   }

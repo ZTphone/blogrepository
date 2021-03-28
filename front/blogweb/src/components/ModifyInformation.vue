@@ -85,7 +85,6 @@ export default {
             this.freshenFormData()
           })
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
@@ -93,10 +92,7 @@ export default {
     freshenFormData(){
       postRequest('/getUserById',{userId:window.sessionStorage.getItem('activeId')}).then(res=>{
         this.ruleForm=res.data;
-        console.log("--------")
-        console.log(this.ruleForm)
         this.userImage = "http://localhost:9191/static/images/"+ this.ruleForm.image;
-        console.log(this.userImage)
       });
 
     },

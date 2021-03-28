@@ -11,18 +11,14 @@
                 style="width: 100px; height: 100px;float: left;"
                 :src="headsrc"
                 :fit="fill"></el-image>
-              <!--          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">-->
               <div style="padding: 14px;float: left;height: 130px">
                 <span>{{value.author.username}}</span>
                 <el-tag>{{value.author.signature}}</el-tag>
-                <el-button type="text" class="button">关注</el-button>
+                <el-button type="text" class="button" @click="follow">关注</el-button>
               </div>
             </el-col>
           </el-row>
-
-
         </el-card>
-
 
     <mavon-editor
       class="md"
@@ -35,16 +31,6 @@
       :scrollStyle="scrollStyle"
     ></mavon-editor>
 
-<!--    评论区-->
-<!--    <div>-->
-<!--        <el-row>-->
-<!--&lt;!&ndash;          <el-col>{{value.commentList.user.username}}</el-col>&ndash;&gt;-->
-<!--&lt;!&ndash;          <el-col>{{value.commentList.comment.content}}</el-col>&ndash;&gt;-->
-<!--          <p>评论者</p>-->
-<!--          <p>评论内容</p>-->
-<!--    v-bind:type="[hasCollect ? success:warning]"-->
-<!--        </el-row>-->
-<!--    </div>-->
     <div>
       <div style="height: 200px">
         <el-button :type="hasCollect ? 'success':''" icon="el-icon-star-off" circle @click="onCollect"></el-button>收藏
@@ -68,13 +54,7 @@
     </div>
     <div>
       <el-card :body-style="{ padding: '0px' }">
-        <!--          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">-->
         <div style="padding: 14px;float: left;">
-          <!--        <div style="height: 60px">-->
-          <!--          <h1>{{value.commentList}}</h1>-->
-          <!--        </div>-->
-          <!--        <div style="height: 60px" v-for="commentObject in value.commentList" :key="commentObject">-->
-
           <div style="height: 60px;text-align:left" v-for="o in value.commentList" :key="o">
               <el-tag>{{o.user.username}}</el-tag>
               <span>{{o.comment.content}}</span>
@@ -99,8 +79,6 @@ export default {
   name: "ShowEssay",
   data(){
     return{
-      //value:'<h2><a id="_0"></a>新的改变</h2> <p>我们对Markdown编辑器进行了一些功能拓展与语法支持，除了标准的Markdown编辑器功能，我们增加了如下几点新功能，帮助你用它写博客：</p> <ol> <li><strong>全新的界面设计</strong> ，将会带来全新的写作体验；</li> <li>在创作中心设置你喜爱的代码高亮样式，Markdown <strong>将代码片显示选择的高亮样式</strong> 进行展示；</li> <li>增加了 <strong>图片拖拽</strong> 功能，你可以将本地的图片直接拖拽到编辑区域直接展示；</li> <li>全新的 <strong>KaTeX数学公式</strong> 语法；</li> </ol> ',
-      //defaultData: "preview",
       headsrc:'',
       currentDate: new Date(),
       form:{
@@ -124,21 +102,11 @@ export default {
 
       this.form.userId=window.sessionStorage.getItem('activeId');
       this.form.essayId=this.$route.params.essayId;
-      //
-      // postRequest("/checkCollected",{userId:this.form.userId,essayId: this.form.essayId}).then(res=>{
-      //   this.hasCollect = res.data
-      //   console.log(res.data+'kkkkkk');
-      // });
-      // postRequest("/checkFavor",{userId:this.form.userId,essayId: this.form.essayId}).then(res=>{
-      //   this.hasCollect = res.data
-      //   console.log(res.data+'ffff');
-      // });
 
       postRequest('/showEssayPageById',{userId:this.form.userId,essayId:this.form.essayId}).then(res=>{
         this.value=res.data
         this.hasCollect=this.value.hasCollect;
         this.hasFavor=this.value.hasFavor;
-        console.log(this.value)
         this.headsrc="http://localhost:9191/static/images/"+this.value.author.image;
       });
 
@@ -173,22 +141,20 @@ export default {
         this.hasFavor=true;
         postRequest(('/addFavor'),{userId:this.form.userId,essayId:this.form.essayId})
       }
+    },
+    follow(){
+      postRequest('/follow',{userId:this.form.userId,bloggerId:this.value.author.id}).then(res=>{
+        if (res.data.state) {
+          this.$message.success(res.data.message)
+          this.initValue();
+          this.form.content = '';
+        } else {
+          this.$message.error(res.data.message)
+        }
+      });
     }
   },
-  // computed: {
-  //   prop () {
-  //     let data = {
-  //       subfield: false,// 单双栏模式
-  //       defaultOpen: 'preview',//edit： 默认展示编辑区域 ， preview： 默认展示预览区域
-  //       editable: false,
-  //       toolbarsFlag: false,
-  //       scrollStyle: true
-  //     }
-  //     return data
-  //   }
-  // }
   created() {
-   // console.log('----------'+this.$route.params.essayId);
     this.initValue()
   }
 }

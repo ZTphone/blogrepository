@@ -36,6 +36,7 @@
 
             <el-menu-item-group>
               <template slot="title">文章管理</template>
+              <el-menu-item index="/follow_list">关注的人</el-menu-item>
               <el-menu-item index="/publish_essay">发布的文章</el-menu-item>
               <el-menu-item index="/draft_essay">草稿</el-menu-item>
               <el-menu-item index="/collected_essay">收藏的文章</el-menu-item>
@@ -65,7 +66,7 @@
         <el-main height="1000px">
           <router-view></router-view>
         </el-main>
-        <el-footer >Footer</el-footer>
+<!--        <el-footer >Footer</el-footer>-->
       </el-container>
 
     </el-container>
@@ -98,7 +99,6 @@ export default {
     initImagePath() {
      postRequest('/getUserById',{userId:window.sessionStorage.getItem('activeId')}).then(res=>{
        this.userImage = "http://localhost:9191/static/images/"+res.data.image;
-       console.log('#######'+this.userImage)
      })
 
     }

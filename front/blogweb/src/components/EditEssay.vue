@@ -50,7 +50,6 @@ export default {
 
     },
     publishEssay(){
-      //console.log(window.sessionStorage.getItem('activeId'))
       if(this.value===''||this.title==='') this.$message.warning('文章标题或者内容不能为空！');
       else{
         postRequest('/publishEssay',{userId:window.sessionStorage.getItem('activeId'),title:this.title,

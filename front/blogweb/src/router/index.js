@@ -15,6 +15,8 @@ import Register from "../components/Register";
 import EditDraft from "../components/EditDraft";
 import UploadImageTest from "../components/UploadImageTest";
 import ShowHotEssay from "../components/ShowHotEssay";
+import FollowList from "../components/FollowList";
+import BloggerEssay from "../components/BloggerEssay";
 
 Vue.use(Router)
 
@@ -63,6 +65,14 @@ const router = new Router({
         path:'/draft_essay',
         name:'DraftEssay',
         component: DraftEssay
+      },{
+        path:'/follow_list',
+        name:'FollowList',
+        component: FollowList
+      },{
+        path:'/blogger_essay',
+        name:'BloggerEssay',
+        component: BloggerEssay
       }
         ,{
           path:'/publish_essay',
