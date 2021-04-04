@@ -79,7 +79,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          postRequest("/register",this.ruleForm).then(res=>{
+          var salt = '6cb755e000cf62e'
+          var newuser = this.ruleForm
+          newuser.pwd = this.$md5(salt+newuser.pwd)
+          console.log('--------')
+          console.log(newuser.pwd)
+          postRequest("/register",newuser).then(res=>{
             if(res.data.state){
               this.$message.success(res.data.message)
               this.resetForm('ruleForm');

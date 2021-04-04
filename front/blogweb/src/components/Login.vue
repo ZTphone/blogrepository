@@ -93,10 +93,13 @@ export default {
       // this.$http.post('http://localhost:9191/logintest',{username:username,password: password}).then(
       //   res=>{console.log(res.data.message)}
       // );
-      postRequest('/logintest',{username:this.loginform.username,password: this.loginform.password}).then(
+      var salt = '6cb755e000cf62e'
+      var pwd = this.$md5(salt+this.loginform.password);
+      console.log('--------')
+      console.log(pwd)
+      postRequest('/logintest',{username:this.loginform.username,password: pwd}).then(
         res=>{
           if(res.data.state){
-            console.log(res.data)
             this.$message({
               message: res.data.message,
               type: 'success'

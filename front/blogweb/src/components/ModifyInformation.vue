@@ -67,7 +67,7 @@ export default {
           { required: true, message: '请输入活动名称', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        pwd:[{ required: true, message: '请输入密码', trigger: 'blur' }],
+        //pwd:[{ required: true, message: '请输入密码', trigger: 'blur' }],
         sex:[{ required: true, message: '请输入性别', trigger: 'blur' }],
         signature:[{ required: true, message: '请输入个性签名', trigger: 'blur' }],
       },
@@ -80,7 +80,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          postRequest('/modifyInformation',this.ruleForm).then(res=>{
+          var salt = '6cb755e000cf62e'
+          var user= this.ruleForm
+          console.log('??'+user.pwd)
+          if(user.pwd!='') user.pwd = this.$md5(salt+user.pwd)
+          console.log(user.pwd)
+          postRequest('/modifyInformation',user).then(res=>{
             this.$message.warning(res.data.message);
             this.freshenFormData()
           })

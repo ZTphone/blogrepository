@@ -13,6 +13,7 @@ import 'mavon-editor/dist/css/index.css'
 import axios from 'axios';
 // import VueAxios from "vue-axios";
 
+import md5 from 'js-md5'
 //axios.defaults.withCredentials=true;
 
 // 配置请求根路径
@@ -29,7 +30,7 @@ axios.defaults.baseURL="http://localhost:9191/";
 //   return config
 // })
 Vue.prototype.$http=axios;
-
+Vue.prototype.$md5=md5;
 // Vue.use(VueAxios,axios);
 //
 
