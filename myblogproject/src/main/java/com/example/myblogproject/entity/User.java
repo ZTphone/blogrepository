@@ -77,6 +77,8 @@ public class User implements Serializable {
         this.image = image;
     }
 
+    public void setPwdNull(){this.pwd=null;}
+
     @Override
     public String toString() {
         return "User{" +

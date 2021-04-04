@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myblogproject.entity.User;
 import com.example.myblogproject.mapper.UserMapper;
 import com.example.myblogproject.service.EditPrivacyImformation;
+import com.example.myblogproject.utils.Log;
+import com.example.myblogproject.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,9 @@ public class EditPrivacyImformationImpl implements EditPrivacyImformation {
 
     @Override
     public User getUserById(Integer id) {
-        return userMapper.selectById(id);
+        User user = userMapper.selectById(id);
+        user.setPwd("");
+        return user;
     }
 
     @Override
@@ -45,6 +49,13 @@ public class EditPrivacyImformationImpl implements EditPrivacyImformation {
 
     @Override
     public Boolean modifyByUser(User user) {
+        Log.log("modifyInformation",user.getPwd());
+        if(user.getPwd()=="") {
+            user.setPwdNull();
+        }else{
+                user.setPwd(MD5Util.getSecondMD5(user.getPwd()));
+                Log.log("afterTow",user.getPwd());
+            }
         return userMapper.update(user,new QueryWrapper<User>().eq("id",user.getId()))!=0;
     }
 
