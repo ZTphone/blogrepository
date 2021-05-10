@@ -87,7 +87,7 @@ export default {
 <style scoped>
 
 .div-height{width:100%; height:600px;padding: 5px;}
-.button-div-height{height: 100px;
+.button-div-height{height: 30px;
   margin-top:5px;margin-bottom:6px;margin-left:4px;
   padding: 5px;
 }

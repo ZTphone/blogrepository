@@ -12,9 +12,9 @@
                 :src="headsrc"
                 :fit="fill"></el-image>
               <div style="padding: 14px;float: left;height: 130px">
-                <span>{{value.author.username}}</span>
-                <el-tag>{{value.author.signature}}</el-tag>
-                <el-button type="text" class="button" @click="follow">关注</el-button>
+                <div><el-button type="text" class="button" @click="follow">关注</el-button></div>
+                <div style="height: 45px;line-height: 20px">{{value.author.username}}</div>
+                <div><el-tag>{{value.author.signature}}</el-tag></div>
               </div>
             </el-col>
           </el-row>
@@ -33,8 +33,10 @@
 
     <div>
       <div style="height: 200px">
-        <el-button :type="hasCollect ? 'success':''" icon="el-icon-star-off" circle @click="onCollect"></el-button>收藏
-        <el-button  :type="hasFavor ? 'success':''" icon="el-icon-thumb" circle @click="onFavor"></el-button>点赞
+        <div style="padding: 5px">
+          <el-button :type="hasCollect ? 'success':''" icon="el-icon-star-off" circle @click="onCollect"></el-button>收藏
+          <el-button  :type="hasFavor ? 'success':''" icon="el-icon-thumb" circle @click="onFavor"></el-button>点赞
+        </div>
         <br>
         <el-form ref="form" :model="form" label-width="80px">
           <el-row>

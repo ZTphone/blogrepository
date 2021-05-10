@@ -9,7 +9,7 @@
       <div class="log-cloud cloud3"></div>
       <div class="log-cloud cloud4"></div>
 
-      <div class="log-logo">博客网站</div>
+      <div class="log-logo">校园博客</div>
       <div class="log-text">欢迎!</div>
     </div>
     <div class="log-email">
@@ -125,7 +125,7 @@ export default {
     },
     toRegister(){
       this.$router.push('/register');
-      this.$message.warning("clicked")
+      // this.$message.warning("clicked")
     }
   }
 }
