@@ -53,12 +53,13 @@ public class RedisServiceImpl implements RedisSevice {
         List<EssayCount> essayCountList = page.getRecords();
 
         List<Integer> essayIdList = new ArrayList<>();
-        for(EssayCount ec : essayCountList){
+        for(int i=0;i<10;i++){
+            EssayCount ec = essayCountList.get(i);
             essayIdList.add(ec.getEssayId());
         }
         QueryWrapper<Essay> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.in("id",essayIdList);
-
+        // 通过文章id获取文章内容信息
         List<ListItem> itemList = new ArrayList<>();
         for(Integer essayId : essayIdList){
             itemList.add(listService.getListItembyEssayId(essayId));

@@ -19,8 +19,7 @@ public class LoginAndRegistServiceImpl implements LoginAndRegistService {
 
     @Override
     public Integer checkUsernameAndPassword(String username, String password) {
-        Log.log("afterFisrt",password);
-        Log.log("afterSecond",MD5Util.getSecondMD5(password));
+
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",username);
         queryWrapper.eq("pwd", MD5Util.getSecondMD5(password));

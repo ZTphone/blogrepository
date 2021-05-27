@@ -96,6 +96,7 @@ public class ListServiceImpl implements ListService {
         for(EssayFavor e : favorList){
             set.add(e.getEssayId());
         }
+        if(set.size()==0) return new ArrayList<ListItem>();
         QueryWrapper<Essay> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("id",set);
         return this.getList(queryWrapper);
@@ -108,6 +109,7 @@ public class ListServiceImpl implements ListService {
         for(Collect e : collectList){
             set.add(e.getEssayId());
         }
+        if(set.size()==0) return new ArrayList<ListItem>();
         QueryWrapper<Essay> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("id",set);
         return this.getList(queryWrapper);
@@ -120,6 +122,7 @@ public class ListServiceImpl implements ListService {
         for(Comment e : commentList){
             set.add(e.getEssayId());
         }
+        if(set.size()==0) return new ArrayList<ListItem>();
         QueryWrapper<Essay> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("id",set);
         return this.getList(queryWrapper);
@@ -147,7 +150,7 @@ public class ListServiceImpl implements ListService {
     public ListItem getListItembyEssayId(Integer essayId) {
         Essay e = essayMapper.selectById(essayId);
         ListItem listItem = new ListItem();
-        listItem.setEssayId(e.getId());
+         listItem.setEssayId(e.getId());
         listItem.setTitle(e.getTitle());
         User author = userMapper.selectById(e.getAuthor());
         listItem.setAuthor(author.getUsername());

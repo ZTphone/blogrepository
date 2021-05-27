@@ -18,10 +18,8 @@ public class HotEssaysServiceImpl implements HotEssaysService {
 
     @Override
     public List<ListItem> listHotest() {
-        System.out.println(RedisUtil.isEmpty()+"Empty????");
         if(RedisUtil.get("itemList")==null) redisSevice.initHotData();
         List<ListItem> list = redisSevice.listHotest();
-        System.out.println(list);
         return list;
     }
 
